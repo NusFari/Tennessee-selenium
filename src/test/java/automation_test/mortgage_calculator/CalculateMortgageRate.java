@@ -1,34 +1,10 @@
 package automation_test.mortgage_calculator;
 
-import command_providers.ActOn;
-import command_providers.AssertThat;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import automation_test.BaseClass;
 import org.testng.annotations.Test;
 import page_objects.Home;
 import utilities.DateUtilities;
-
-
-import java.util.Date;
-
-
-public class CalculateMortgageRate {
-    WebDriver driver;
-
-    @BeforeMethod
-    public void openBrowser() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        driver = new ChromeDriver(options);
-        ActOn.browser(driver).openBrowser("https://www.mortgagecalculator.org/");
-    }
-
+public class CalculateMortgageRate extends BaseClass {
     @Test
     public void calculateMonthlyPayment() throws Exception {
         String[] date = DateUtilities.returnNextMonth();
@@ -52,8 +28,5 @@ public class CalculateMortgageRate {
                 .validateTotalMonthlyPayment("1,611.85");
     }
 
-    @AfterMethod
-    public void browserCleanup() {
-        ActOn.browser(driver).closeBrowser();
-    }
+
 }
